@@ -1,11 +1,41 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
+import axios from "axios";
+
 function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-gray-900 mb-6">Tailwind Test</h1>
-      <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
-        Test Button
-      </button>
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <nav className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex space-x-8 items-center">
+                <Link
+                  to="/"
+                  className="text-gray-900 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="text-gray-900 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Dashboard
+                </Link>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 

@@ -1,5 +1,6 @@
 # Ignore the start.sh script
 start.sh
+stop.sh
 curl_requests.sh
 Development.md
 .env

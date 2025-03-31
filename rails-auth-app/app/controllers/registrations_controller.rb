@@ -1,5 +1,6 @@
 class RegistrationsController < ApplicationController
     def create
+        raise params.inspect
         user = User.create!(
             email: params['user']['email'],
             password: params['user']['password'],
@@ -7,10 +8,10 @@ class RegistrationsController < ApplicationController
         )
 
         if user
-        session[:user_id] = user.id
-        render json: {status: :created, user: user, logged_in: true}
+            session[:user_id] = user.id
+            render json: {status: :created, user: user, logged_in: true}
         else
-        render json: {status: 500, message: "User creation failed"}, status: :internal_server_error
+            render json: {status: 500, message: "User creation failed"}, status: :internal_server_error
         end
     end
 end
