@@ -2,8 +2,8 @@
 # check=error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t ruby_auth_app .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name ruby_auth_app ruby_auth_app
+# docker build -t rails_auth_app .
+# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name rails_auth_app rails_auth_app
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
@@ -49,6 +49,9 @@ RUN bundle exec bootsnap precompile app/ lib/
 RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
 
