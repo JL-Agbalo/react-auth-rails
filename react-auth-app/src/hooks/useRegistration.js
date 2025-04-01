@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export const useRegistration = () => {
+export const useRegistration = (handleSuccessfulAuth) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -44,12 +44,18 @@ export const useRegistration = () => {
         }
       );
 
+      console.log("Registration response:", response.data);
+
       if (response.data.status === "created") {
         setSuccessMessage("Registration successful!");
         setErrorMessage(null);
         setFormData({ email: "", password: "", confirmPassword: "" });
+        if (handleSuccessfulAuth) {
+          handleSuccessfulAuth(response.data);
+        }
       }
     } catch (error) {
+      console.error("Registration error:", error.response?.data);
       setErrorMessage(error.response?.data?.error || "Registration failed");
       setSuccessMessage(null);
     }

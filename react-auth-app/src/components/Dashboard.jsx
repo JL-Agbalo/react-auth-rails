@@ -1,23 +1,27 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
-function Dashboard() {
+function Dashboard({ loggedInStatus, user }) {
+  if (loggedInStatus !== "LOGGED_IN") {
+    return <Navigate to="/" />;
+  }
+
   return (
-    <div className="w-full max-w-4xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-6">Dashboard</h1>
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-2xl font-semibold mb-4">
-          Welcome to your Dashboard
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2">Quick Stats</h3>
-            <p className="text-gray-600">Your activity overview</p>
-          </div>
-          <div className="bg-green-50 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2">Recent Activity</h3>
-            <p className="text-gray-600">Latest updates and changes</p>
-          </div>
+    <div className="bg-white shadow rounded-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <div className="space-y-4">
+        <div>
+          <p className="text-gray-600">Status: {loggedInStatus}</p>
+          <p className="text-gray-600">Welcome, {user.email}</p>
         </div>
+        {Object.keys(user).length > 0 && (
+          <div className="bg-gray-50 p-4 rounded-md">
+            <h2 className="text-lg font-semibold mb-2">User Information</h2>
+            <pre className="whitespace-pre-wrap">
+              {JSON.stringify(user, null, 2)}
+            </pre>
+          </div>
+        )}
       </div>
     </div>
   );

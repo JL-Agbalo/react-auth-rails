@@ -2,8 +2,17 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import axios from "axios";
+import React, { useState } from "react";
 
 function App() {
+  const [loggedInStatus, setLoggedInStatus] = useState("NOT_LOGGED_IN");
+  const [user, setUser] = useState({});
+
+  const handleSuccessfulAuth = (data) => {
+    setLoggedInStatus("LOGGED_IN");
+    setUser(data.user);
+  };
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
@@ -30,8 +39,22 @@ function App() {
 
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  handleSuccessfulAuth={handleSuccessfulAuth}
+                  loggedInStatus={loggedInStatus}
+                  user={user}
+                />
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard loggedInStatus={loggedInStatus} user={user} />
+              }
+            />
           </Routes>
         </main>
       </div>

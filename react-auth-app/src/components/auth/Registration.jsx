@@ -1,9 +1,9 @@
 import React from "react";
 import { useRegistration } from "../../hooks/useRegistration";
 
-const Registration = () => {
+const Registration = ({ handleSuccessfulAuth }) => {
   const { formData, errorMessage, successMessage, handleChange, handleSubmit } =
-    useRegistration();
+    useRegistration(handleSuccessfulAuth);
 
   return (
     <div className="flex flex-col justify-center py-6 sm:px-6 lg:px-8">
