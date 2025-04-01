@@ -1,14 +1,29 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function Dashboard({ loggedInStatus, user }) {
+function Dashboard({ loggedInStatus, user, handleLogout }) {
+  const navigate = useNavigate();
+
   if (loggedInStatus !== "LOGGED_IN") {
     return <Navigate to="/" />;
   }
 
+  const handleLogoutClick = async () => {
+    await handleLogout();
+    navigate("/");
+  };
+
   return (
     <div className="bg-white shadow rounded-lg p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <button
+          onClick={handleLogoutClick}
+          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
+        >
+          Logout
+        </button>
+      </div>
       <div className="space-y-4">
         <div>
           <p className="text-gray-600">Status: {loggedInStatus}</p>
